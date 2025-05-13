@@ -54,29 +54,29 @@ namespace Tokenizer_Unit_Test
 
 	TEST(Tokenizer_GetTokenFromExperssion, Can_Get_Tokens_From_Experssion) {
 		char pText[] = "The+quick+brown - fox+jumps*over+the   (lazy   ++++ dog) ";
-		const char pDelimeter[] = "+-*/()";
-		char* pToken = Tokenizer::GetTokenFromExpression(pText, pDelimeter);
+		const char pOperators[] = "+-*/()";
+		char* pToken = Tokenizer::GetTokenFromExpression(pText, pOperators);
 		ASSERT_STREQ("The", pToken);
-		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("quick", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("brown", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("-", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("fox", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("jumps", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("*", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("over", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("the", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("(", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("lazy", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ("dog", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_STREQ(")", Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
-		ASSERT_EQ(nullptr, Tokenizer::GetTokenFromExpression(nullptr, pDelimeter));
+		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("quick", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("brown", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("-", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("fox", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("jumps", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("*", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("over", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("the", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("(", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("lazy", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("+", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ("dog", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_STREQ(")", Tokenizer::GetTokenFromExpression(nullptr, pOperators));
+		ASSERT_EQ(nullptr, Tokenizer::GetTokenFromExpression(nullptr, pOperators));
 	}
 }
