@@ -3,14 +3,31 @@
 
 #include <iostream>
 #include "..\CalcLib\CalcLib.h"
+#include "ConsoleIo.h"
+#include "EchoService.h"
 
-int main()
+
+void TokenDemo()
 {
 	const char* pDelimeter = "abcde";
 	Tokenizer::IsDelimeterOrSpace('b', pDelimeter);
 	Tokenizer::IsSpace('c');
     std::cout << "Hello World!\n";
 }
+
+void EchoService()
+{
+	ServiceDescriptor svcDesc;
+	InitService(ConsoleInput, ConsoleOutput, &svcDesc);
+	StartService(&svcDesc);
+}
+
+int main()
+{
+	//TokenDemo();
+	EchoService();
+}
+
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
 // Debug program: F5 or Debug > Start Debugging menu

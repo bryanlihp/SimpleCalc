@@ -128,6 +128,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConsoleIo.cpp" />
+    <ClCompile Include="EchoService.cpp" />
+    <ClCompile Include="ServiceIo.cpp" />
+    <ClCompile Include="ServiceState.cpp" />
     <ClCompile Include="SimpleCalc.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +140,12 @@
       <LinkLibraryDependencies>true</LinkLibraryDependencies>
       <UseLibraryDependencyInputs>false</UseLibraryDependencyInputs>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ConsoleIo.h" />
+    <ClInclude Include="EchoService.h" />
+    <ClInclude Include="ServiceIo.h" />
+    <ClInclude Include="ServiceState.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
