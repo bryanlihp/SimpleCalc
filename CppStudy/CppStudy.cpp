@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include "..\CalcLib\CalcLib.h"
+#include "..\Alogrithms\Sort.h"
 #include "ConsoleIo.h"
 #include "EchoService.h"
+
 
 
 void TokenDemo()
@@ -15,17 +17,12 @@ void TokenDemo()
     std::cout << "Hello World!\n";
 }
 
-void EchoService()
-{
-	ServiceDescriptor svcDesc;
-	InitService(ConsoleInput, ConsoleOutput, &svcDesc);
-	StartService(&svcDesc);
-}
 
 int main()
 {
 	//TokenDemo();
-	EchoService();
+	//EchoService();
+	Sort();
 }
 
 

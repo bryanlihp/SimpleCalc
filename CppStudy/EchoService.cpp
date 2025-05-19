@@ -2,13 +2,21 @@
 #include <string.h>
 #include <stdlib.h>
 #include "EchoService.h"
+#include "ConsoleIo.h"
 
 void OnUserNameRcvd(ServiceDescriptor* pSvcDesc, const char* pInputText);
-void SetUsername(const char* pInputText, ServiceDescriptor* pSvcDesc);
 void AuthenticateUser(ServiceDescriptor* pSvcDesc, const char* pInputText);
 void EchoText(ServiceDescriptor* pSvcDesc, const char* pInputText);
 bool HandleInput(ServiceDescriptor* pSvcDesc, const char* pInputText);
 const char* GetPrompter(int state);
+
+void EchoService()
+{
+    ServiceDescriptor svcDesc;
+    InitService(ConsoleInput, ConsoleOutput, &svcDesc);
+    StartService(&svcDesc);
+}
+
 
 bool InitService(pfnSvcInput read, pfnSvcOutput write, ServiceDescriptor* pSvcDesc)
 {
@@ -19,7 +27,7 @@ bool InitService(pfnSvcInput read, pfnSvcOutput write, ServiceDescriptor* pSvcDe
 
     pSvcDesc->read = read;
     pSvcDesc->write = write;
-    pSvcDesc->state = USER_NAME_WAIT;
+    pSvcDesc->state = ECHO_SVC;
     pSvcDesc->pLoggedInUserName = nullptr;
     pSvcDesc->nUsers = 2;
     pSvcDesc->serviceUsers[0] = {1,"user1","password1"};
@@ -181,7 +189,7 @@ void AuthenticateUser(ServiceDescriptor* pSvcDesc, const char* pInputText)
 
 void EchoText(ServiceDescriptor* pSvcDesc, const char* pInputText)
 {
-    if (pInputText && _stricmp(pInputText, "logout") == 0)
+    if (pInputText && _stricmp(pInputText, "logout") == 0&&false)
     {
         pSvcDesc->state = USER_NAME_WAIT;
     }

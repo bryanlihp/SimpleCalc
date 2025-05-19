@@ -18,17 +18,19 @@ char* ConsoleInput()
 {
 	char* pText = nullptr;
 	char buf[1024];
-    fgets(buf, 1023, stdin);
-	int size = strlen(buf);
-    if (buf[size - 1] == '\n')
-    {
-        size--;
-    }
-	if (size > 0)
+	if (nullptr != fgets(buf, 1023, stdin))
 	{
-		pText = (char*)malloc(size+1);
-		memcpy(pText, buf, size);
-		pText[size] = '\0';
+		int size = strlen(buf);
+		if (buf[size - 1] == '\n')
+		{
+			size--;
+		}
+		if (size > 0)
+		{
+			pText = (char*)malloc(size + 1);
+			memcpy(pText, buf, size);
+			pText[size] = '\0';
+		}
 	}
 	return pText;
 }

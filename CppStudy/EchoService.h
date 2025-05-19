@@ -20,5 +20,6 @@ struct ServiceDescriptor
 	User serviceUsers[2];
 };
 
+void EchoService();
 bool InitService(pfnSvcInput read, pfnSvcOutput write, ServiceDescriptor * pSvcDesc);
 void StartService(ServiceDescriptor * pSvcDesc);
