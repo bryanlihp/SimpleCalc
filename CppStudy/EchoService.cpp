@@ -136,6 +136,7 @@ bool SetUsername(ServiceDescriptor* pSvcDesc, const char* pInputText)
     if (pSvcDesc->pLoggedInUserName)
     {
         free(pSvcDesc->pLoggedInUserName);
+        pSvcDesc->pLoggedInUserName = nullptr;
     }
     pSvcDesc->pLoggedInUserName = (char*)malloc(n + 1);
     memcpy(pSvcDesc->pLoggedInUserName, pInputText, n);

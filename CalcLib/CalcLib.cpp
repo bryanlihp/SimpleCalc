@@ -15,7 +15,7 @@ namespace Tokenizer
 	bool IsDelimeter(char ch, const char *pDelimeters)
 	{
 		const char *pDelimeterChar = pDelimeters;
-		while (*pDelimeterChar != '\0' && *pDelimeterChar != ch) pDelimeterChar++;
+		while ('\0'  != *pDelimeterChar &&  ch != *pDelimeterChar) pDelimeterChar++;
 		return '\0' != *pDelimeterChar;
 	}
 
@@ -28,7 +28,7 @@ namespace Tokenizer
 	{
 		static char* pTextToParse = nullptr;
 		static char currentChar;
-		if (nullptr == pTextToParse)
+		if (nullptr != pInputText)
 		{
 			// reset the parsing text when input text is not null
 			pTextToParse = pInputText;
@@ -37,7 +37,7 @@ namespace Tokenizer
 		*pTextToParse = currentChar; // restore the current char (previously set to '\0' by the last call)
 
 		// skip leading delimeters
-		while (IsDelimeterOrSpace(currentChar, pDelimeters) && '\0' != currentChar)
+		while ('\0' != currentChar && IsDelimeterOrSpace(currentChar, pDelimeters) )
 		{
 			++pTextToParse;
 			currentChar = *pTextToParse;
@@ -50,7 +50,7 @@ namespace Tokenizer
 		
 		char* pToken = pTextToParse; // Token starts
 
-		while (!IsDelimeterOrSpace(currentChar, pDelimeters) && '\0' != currentChar)
+		while ( '\0' != currentChar &&!IsDelimeterOrSpace(currentChar, pDelimeters))
 		{
 			++pTextToParse;
 			currentChar = *pTextToParse;

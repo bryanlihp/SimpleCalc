@@ -8,6 +8,22 @@
 #include "EchoService.h"
 
 
+void MergeSortDemo(int nElements)
+{
+	int* pElements = (int*)malloc(nElements * sizeof(int));
+
+	BuildElements(pElements, nElements);
+	printf("Original:\n");
+	ShowElements(pElements, nElements);
+	MergeSort(pElements, 0, nElements - 1);
+	printf("Sorted:\n");
+	ShowElements(pElements, nElements);
+
+	free(pElements);
+	pElements = NULL;
+}
+
+
 
 void TokenDemo()
 {
@@ -22,7 +38,7 @@ int main()
 {
 	//TokenDemo();
 	//EchoService();
-	Sort();
+	MergeSortDemo(10);
 }
 
 
