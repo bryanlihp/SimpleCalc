@@ -28,8 +28,8 @@ void MergeSortDemo(int nElements)
 void TokenDemo()
 {
 	const char* pDelimeter = "abcde";
-	Tokenizer::IsDelimeterOrSpace('b', pDelimeter);
-	Tokenizer::IsSpace('c');
+	IsDelimeterOrSpace('b', pDelimeter);
+	IsSpace('c');
     std::cout << "Hello World!\n";
 }
 
@@ -37,8 +37,8 @@ void TokenDemo()
 int main()
 {
 	//TokenDemo();
-	//EchoService();
-	MergeSortDemo(10);
+	EchoService();
+	//MergeSortDemo(10);
 }
 
 

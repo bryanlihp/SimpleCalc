@@ -24,12 +24,36 @@
     <ClInclude Include="CalcLib.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Lexer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LexState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LexicalToken.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tokenizer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CalcLib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Lexer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LexState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LexicalToken.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tokenizer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

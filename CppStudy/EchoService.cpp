@@ -7,7 +7,8 @@
 void OnUserNameRcvd(ServiceDescriptor* pSvcDesc, const char* pInputText);
 void AuthenticateUser(ServiceDescriptor* pSvcDesc, const char* pInputText);
 void EchoText(ServiceDescriptor* pSvcDesc, const char* pInputText);
-bool HandleInput(ServiceDescriptor* pSvcDesc, const char* pInputText);
+void EvalSvc(ServiceDescriptor* pSvcDesc, char* pInputText);
+bool HandleInput(ServiceDescriptor* pSvcDesc, char* pInputText);
 const char* GetPrompter(int state);
 
 void EchoService()
@@ -70,7 +71,7 @@ void StartService(ServiceDescriptor* pSvcDesc)
 
 const char* GetPrompter(int state)
 {
-    static const char* Prompters[] = { "USR>","PWD>","ECHO>" };
+    static const char* Prompters[] = { "USR>","PWD>","ECHO>","EXP>" };
     const char* pText = nullptr;
     switch (state)
     {
@@ -83,11 +84,14 @@ const char* GetPrompter(int state)
     case ECHO_SVC:
         pText = Prompters[2];
         break;
+    case EVAL_SVC:
+        pText = Prompters[3];
+        break;
     }
     return pText;
 }
 
-bool HandleInput(ServiceDescriptor* pSvcDesc, const char* pInputText)
+bool HandleInput(ServiceDescriptor* pSvcDesc, char* pInputText)
 {
     switch (pSvcDesc->state)
     {
@@ -99,6 +103,9 @@ bool HandleInput(ServiceDescriptor* pSvcDesc, const char* pInputText)
         break;
     case ECHO_SVC:
         EchoText(pSvcDesc, pInputText);
+        break;
+    case EVAL_SVC:
+        EvalSvc(pSvcDesc, pInputText);
         break;
     }
     return true;
@@ -190,12 +197,67 @@ void AuthenticateUser(ServiceDescriptor* pSvcDesc, const char* pInputText)
 
 void EchoText(ServiceDescriptor* pSvcDesc, const char* pInputText)
 {
-    if (pInputText && _stricmp(pInputText, "logout") == 0&&false)
+    if (pInputText)
     {
-        pSvcDesc->state = USER_NAME_WAIT;
+        if (_stricmp(pInputText, "logout") == 0 )
+        {
+            pSvcDesc->state = USER_NAME_WAIT;
+        }
+        if (_stricmp(pInputText, "expval") == 0)
+        {
+            pSvcDesc->state = EVAL_SVC;
+        }
+        else
+        {
+            pSvcDesc->write(pInputText, true);
+        }
     }
-    else
+}
+
+#include "..\CalcLib\CalcLib.h"
+
+static char* g_pExpression = nullptr;
+void SimpleTokenSink(TokenDescriptor token, bool bFirstToken)
+{
+    if (bFirstToken && nullptr != g_pExpression)
     {
-        pSvcDesc->write(pInputText, true);
+        free(g_pExpression);
+        g_pExpression = nullptr;
+    }
+    char *pNewExpression = Concat(g_pExpression, token.pTokenText);
+    free(g_pExpression);
+    g_pExpression = pNewExpression;
+}
+
+void EvalSvc(ServiceDescriptor* pSvcDesc, char* pInputText)
+{
+    if (pInputText)
+    {
+        if (_stricmp(pInputText, "logout") == 0)
+        {
+            pSvcDesc->state = USER_NAME_WAIT;
+        }
+        if (_stricmp(pInputText, "echo") == 0)
+        {
+            pSvcDesc->state = ECHO_SVC;
+        }
+        else
+        {
+            LexerDescriptor desc;
+            Construct(&desc);
+            AddTokenSink(&desc, SimpleTokenSink);
+            bool bSucceeded = Parse(&desc, pInputText);
+            if (bSucceeded)
+            {
+                pSvcDesc->write(g_pExpression, true);
+                free(g_pExpression);
+                g_pExpression = nullptr;
+            }
+            else
+            {
+                pSvcDesc->write(desc.pErrorText, true);
+            }
+            Destruct(&desc);
+        }
     }
 }
