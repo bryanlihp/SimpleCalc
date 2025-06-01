@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "..\CalcLib\Utility.h"
 #include "EchoService.h"
 #include "ConsoleIo.h"
 
@@ -28,7 +29,7 @@ bool InitService(pfnSvcInput read, pfnSvcOutput write, ServiceDescriptor* pSvcDe
 
     pSvcDesc->read = read;
     pSvcDesc->write = write;
-    pSvcDesc->state = ECHO_SVC;
+    pSvcDesc->state = EVAL_SVC;
     pSvcDesc->pLoggedInUserName = nullptr;
     pSvcDesc->nUsers = 2;
     pSvcDesc->serviceUsers[0] = {1,"user1","password1"};
@@ -111,31 +112,10 @@ bool HandleInput(ServiceDescriptor* pSvcDesc, char* pInputText)
     return true;
 }
 
-char* Concat(const char* pFirst, const char* pSecond)
-{
-    char* pBuffer = nullptr;
-    int size1 = pFirst? strlen(pFirst) : 0;
-    int size2 = pSecond ? strlen(pSecond) : 0;
-    int size = size1 + size2;
-    pBuffer = (char*)malloc(size+1);
-    if (size != 0)
-    {
-        if (size1>0)
-        {
-            memcpy((void*)pBuffer, pFirst, size1);
-        }
-        if (size2 > 0)
-        {
-            memcpy((void*)(pBuffer+size1), pSecond, size2);
-        }
-        pBuffer[size] = '\0';
-    }
-    return pBuffer;
-}
 
 bool SetUsername(ServiceDescriptor* pSvcDesc, const char* pInputText)
 {
-    int n = strlen(pInputText);
+    size_t n = strlen(pInputText);
     if (n == 0)
     {
         return false;
@@ -216,19 +196,6 @@ void EchoText(ServiceDescriptor* pSvcDesc, const char* pInputText)
 
 #include "..\CalcLib\CalcLib.h"
 
-static char* g_pExpression = nullptr;
-void SimpleTokenSink(TokenDescriptor token, bool bFirstToken)
-{
-    if (bFirstToken && nullptr != g_pExpression)
-    {
-        free(g_pExpression);
-        g_pExpression = nullptr;
-    }
-    char *pNewExpression = Concat(g_pExpression, token.pTokenText);
-    free(g_pExpression);
-    g_pExpression = pNewExpression;
-}
-
 void EvalSvc(ServiceDescriptor* pSvcDesc, char* pInputText)
 {
     if (pInputText)
@@ -244,20 +211,29 @@ void EvalSvc(ServiceDescriptor* pSvcDesc, char* pInputText)
         else
         {
             LexerDescriptor desc;
-            Construct(&desc);
-            AddTokenSink(&desc, SimpleTokenSink);
+            InitLexer(&desc);
+
+            int nInfexIndex = AddTokenSink(&desc, ResultType::TEXT, InFixExpBuilder);
+            int nRpnIndex = AddTokenSink(&desc, ResultType::TEXT, RpnExpBuilder);
+            int nEvalIndex = AddTokenSink(&desc, ResultType::NUMBER, EvalExpBuilder);
+            
             bool bSucceeded = Parse(&desc, pInputText);
             if (bSucceeded)
             {
-                pSvcDesc->write(g_pExpression, true);
-                free(g_pExpression);
-                g_pExpression = nullptr;
+                //LexTokenSink* pInFixSink = desc.ppTokenSinks[nInfexIndex];
+                //pSvcDesc->write(pInFixSink->result.resultValue.pResultText, true);
+                //LexTokenSink* pRpnSink = desc.ppTokenSinks[nRpnIndex];
+                //pSvcDesc->write(pRpnSink->result.resultValue.pResultText, true);
+                LexTokenSink* pEvlSink = desc.ppTokenSinks[nEvalIndex];
+                char buf[32];
+                snprintf(buf, 32, "%d", pEvlSink->result.resultValue.nValue);
+                pSvcDesc->write(buf, true);
             }
             else
             {
                 pSvcDesc->write(desc.pErrorText, true);
             }
-            Destruct(&desc);
+            DestroyLexer(&desc);
         }
     }
 }

@@ -20,7 +20,7 @@ char* ConsoleInput()
 	char buf[1024];
 	if (nullptr != fgets(buf, 1023, stdin))
 	{
-		int size = strlen(buf);
+		size_t size = strlen(buf);
 		if (buf[size - 1] == '\n')
 		{
 			size--;
