@@ -61,7 +61,7 @@ struct LexerDescriptor
 	bool bSucceeded;
 	char* pErrorText;
 
-	LexTokenSink** ppTokenSinks;
+	LexTokenSink **ppTokenSinks;
 	int nSinks;
 
 };

@@ -53,8 +53,7 @@ bool PushToken(TokenList* pTokenList, TokenDescriptor token)
 		{
 			return false;
 		}
-		pTokenList->nCapacity = nNewCapacity;
-		pTokenList->pTokens = pList;
+		pTokenList->nCapacity = nNewCapacity; 
 	}
 	pTokenList->pTokens[pTokenList->nTokens] = CloneToken(token);
 	pTokenList->nTokens++;

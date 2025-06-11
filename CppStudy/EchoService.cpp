@@ -220,10 +220,10 @@ void EvalSvc(ServiceDescriptor* pSvcDesc, char* pInputText)
             bool bSucceeded = Parse(&desc, pInputText);
             if (bSucceeded)
             {
-                //LexTokenSink* pInFixSink = desc.ppTokenSinks[nInfexIndex];
-                //pSvcDesc->write(pInFixSink->result.resultValue.pResultText, true);
-                //LexTokenSink* pRpnSink = desc.ppTokenSinks[nRpnIndex];
-                //pSvcDesc->write(pRpnSink->result.resultValue.pResultText, true);
+                LexTokenSink* pInFixSink = desc.ppTokenSinks[nInfexIndex];
+                pSvcDesc->write(pInFixSink->result.resultValue.pResultText, true);
+                LexTokenSink* pRpnSink = desc.ppTokenSinks[nRpnIndex];
+                pSvcDesc->write(pRpnSink->result.resultValue.pResultText, true);
                 LexTokenSink* pEvlSink = desc.ppTokenSinks[nEvalIndex];
                 char buf[32];
                 snprintf(buf, 32, "%d", pEvlSink->result.resultValue.nValue);
